@@ -1,0 +1,5 @@
+/ {
+    aliases{
+        app-led = &green_led_2;   // LD1 on STM32L475 Discovery kit
+    };
+};
