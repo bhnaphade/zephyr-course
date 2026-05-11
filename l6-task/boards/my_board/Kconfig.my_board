@@ -1,0 +1,2 @@
+config BOARD_MY_BOARD
+	select SOC_STM32L475XX

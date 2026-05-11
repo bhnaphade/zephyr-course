@@ -1,0 +1,6 @@
+board:
+  name: my_board
+  full_name: My Board stm32L475
+  vendor: bhupendra
+  socs:
+    - name: stm32l475xx

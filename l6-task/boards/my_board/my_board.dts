@@ -1,0 +1,69 @@
+/dts-v1/;
+#include <st/l4/stm32l475Xe.dtsi>
+#include <st/l4/stm32l475v(c-e-g)tx-pinctrl.dtsi>
+
+/ {
+	model = "STM32L475 My Board";
+	compatible = "bhupendra,my_board";
+
+    aliases {
+		led0 = &green_led_1; /* LED GPIO pins from Discovery STM32L475 */
+		led1 = &green_led_2; /* LED GPIO pins from Discovery STM32L475 */
+    };
+
+    chosen {
+		zephyr,console = &usart1;
+		zephyr,shell-uart = &usart1;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+    };
+
+	leds {
+		compatible = "gpio-leds";
+
+		/* LED GPIO pins from Discovery STM32L475 */
+		green_led_1: led_1 {
+			gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>;
+			label = "User LD1";
+		};
+
+		/* LED GPIO pins from Discovery STM32L475 */
+		green_led_2: led_2 {
+			gpios = <&gpiob 14 GPIO_ACTIVE_HIGH>;
+			label = "User LD2";
+		};
+    };
+};
+
+&clk_lsi {
+	status = "okay";
+};
+
+&clk_hsi {
+	status = "okay";
+};
+
+&pll {
+	div-m = <1>;
+	mul-n = <20>;
+	div-p = <7>;
+	div-q = <2>;
+	div-r = <4>;
+	clocks = <&clk_hsi>;
+	status = "okay";
+};
+
+&rcc {
+	clocks = <&pll>;
+	clock-frequency = <DT_FREQ_M(80)>;
+	ahb-prescaler = <1>;
+	apb1-prescaler = <1>;
+	apb2-prescaler = <1>;
+};
+
+&usart1 {
+	current-speed = <115200>;
+	pinctrl-0 = <&usart1_tx_pb6 &usart1_rx_pb7>; // UART pins from Discovery STM32L475 */
+	pinctrl-names = "default";
+	status = "okay";
+};

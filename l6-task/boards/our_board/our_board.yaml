@@ -1,0 +1,12 @@
+identifier: our_board
+name: Our Board stm32L475
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+ram: 128
+flash: 512
+supported:
+  - gpio
+  - counter

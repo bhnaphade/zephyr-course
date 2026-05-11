@@ -1,0 +1,10 @@
+/ {
+    aliases{
+        app-led = &green_led_2;   // LD1 on STM32L475 Discovery kit
+    };
+
+    my_led_sensor0: my_led_sensor {
+        compatible = "my-led,sensor";
+        status = "okay";
+    };
+};
