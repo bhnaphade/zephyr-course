@@ -1,0 +1,6 @@
+if (CONFIG_MY_LED_SENSOR)
+    if(CONFIG_SHELL)
+        target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/my_led_sensor_shell.c)
+    endif()
+    target_sources(app PRIVATE my_led_sensor.c)
+endif ()
