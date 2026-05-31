@@ -153,3 +153,38 @@ ZTEST(ring_buf_boundaries, test_is_full_after_fill)
 	zassert_true(rb_is_full(), "Buffer should be full after 4 pushes");
 	zassert_equal(rb_count(), 4, "Count should be 4");
 }
+
+ZTEST(ring_buf_boundaries, test_init_zero_capacity_returns_einval)
+{
+	/* rb_init(0) -> -EINVAL (capacity must be at least 1). */
+	zassert_equal(rb_init(0), -EINVAL, "rb_init(0) must return -EINVAL");
+}
+
+ZTEST(ring_buf_boundaries, test_init_over_max_capacity_returns_einval)
+{
+	/* rb_init(capacity > RING_BUF_MAX_CAPACITY) -> -EINVAL. */
+	zassert_equal(rb_init(RING_BUF_MAX_CAPACITY + 1), -EINVAL,
+		      "rb_init above max capacity must return -EINVAL");
+}
+
+ZTEST(ring_buf_boundaries, test_pop_empty_returns_enodata)
+{
+	/* rb_pop(&v) on an empty buffer -> -ENODATA. */
+	int v;
+
+	zassert_equal(rb_pop(&v), -ENODATA, "pop on empty buffer must return -ENODATA");
+}
+
+ZTEST(ring_buf_boundaries, test_peek_null_returns_einval)
+{
+	/* rb_peek(NULL) -> -EINVAL. */
+	zassert_equal(rb_peek(NULL), -EINVAL, "peek(NULL) must return -EINVAL");
+}
+
+ZTEST(ring_buf_boundaries, test_peek_empty_returns_enodata)
+{
+	/* rb_peek(&v) on an empty buffer -> -ENODATA. */
+	int v;
+
+	zassert_equal(rb_peek(&v), -ENODATA, "peek on empty buffer must return -ENODATA");
+}
